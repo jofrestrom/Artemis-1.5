@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AdministrarPageRoutingModule } from './administrar-routing.module';
+import { FormPerfilUserPageRoutingModule } from './form-perfil-user-routing.module';
 
-import { AdministrarPage } from './administrar.page';
+import { FormPerfilUserPage } from './form-perfil-user.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdministrarPageRoutingModule,
+    FormPerfilUserPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [AdministrarPage]
+  declarations: [FormPerfilUserPage]
 })
-export class AdministrarPageModule {}
+export class FormPerfilUserPageModule {}

@@ -29,6 +29,10 @@ const routes: Routes = [
     path: 'e404',
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
+  {
+    path: 'form-perfil-user',
+    loadChildren: () => import('./pages/form-perfil-user/form-perfil-user.module').then( m => m.FormPerfilUserPageModule)
+  },
 ];
 
 @NgModule({

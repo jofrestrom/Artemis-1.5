@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 
 import { Storage } from '@ionic/storage-angular';
@@ -8,7 +9,7 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class UsuarioService {
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private alertController: AlertController) {
     this.init();
    }
 
@@ -18,13 +19,14 @@ export class UsuarioService {
     let admin = {
       rut: '12345678-k',
       nombre: 'admin',
+      apellido: 'administra',
       correo: 'admin@duocuc.cl',
       password: 'admin1234.',
       confirmpassword: 'admin1234.',
       fecha: '2003-01-01',
-      genero: 'Otro',
+      genero: 'N/A',
       tipo_user: 'Administrador',
-      veiculo: 'No',
+      veiculo: 'NO',
       marca: '',
       patente: '',
       modelo: '',
@@ -34,13 +36,14 @@ export class UsuarioService {
     let Alumno = {
       rut: '21211211-k',
       nombre: 'marcela',
+      apellido: 'rosa',
       correo: 'Mar.@duocuc.cl',
       password: 'marcela123.',
       confirmpassword: 'marcela123.',
       fecha: '2003-01-01',
       genero: 'Femenino',
       tipo_user: 'Alumno',
-      veiculo: 'No',
+      veiculo: 'NO',
       marca: '',
       patente: '',
       modelo: '',
@@ -57,7 +60,7 @@ export class UsuarioService {
       fecha: '2003-01-01',
       genero: 'Masculino',
       tipo_user: 'Conductor',
-      veiculo: 'Si',
+      veiculo: 'SI',
       marca: 'Hunday',
       patente: 'as-as-12',
       modelo: 'sedan',
@@ -72,9 +75,9 @@ export class UsuarioService {
       password: 'lucy123.',
       confirmpassword: 'lucy.',
       fecha: '2003-01-01',
-      genero: 'otro',
+      genero: 'N/A',
       tipo_user: 'Profesor',
-      veiculo: 'No',
+      veiculo: 'NO',
       marca: '',
       patente: '',
       modelo: '',
@@ -101,16 +104,16 @@ export class UsuarioService {
     if (!this.ProfeCorreo.test(usuario.correo) && !this.AlumnoCorreo.test(usuario.correo)){
       return false;
     } 
+    
     if(this.ProfeCorreo.test(usuario.correo)){
       usuario.tipo_user = "Profesor"
     }
 
     if(usuario.veiculo === "SI"){
-      console.log("tiene auto")
       usuario.tipo_user = "Conductor"
     }
 
-    console.log(usuario.value);
+    console.log(JSON.stringify(usuario));
     usuarios.push(usuario);
     await this.storage.set("Usuarios", usuarios);
     return true;    
@@ -134,6 +137,7 @@ export class UsuarioService {
     }
     usuarios.splice(indice, 1);
     await this.storage.set("Usuarios", usuarios);
+    await this.presentAlert("EXITO", "usuario eliminado con exito")
     return true;
   }
 
@@ -149,15 +153,30 @@ export class UsuarioService {
 
   public async ActualizarUsuario(rut: string, nuevoUsuario: any) {
     let usuarios: any[] = await this.storage.get("Usuarios") || [];
+    console.log("rut:",rut)
     let indice = usuarios.findIndex(elemento => elemento.rut === rut);
-    
+    console.log("indice:",indice)
     if (indice === -1) {
       return false;
+    }
+    if (!this.ProfeCorreo.test(nuevoUsuario.correo) && !this.AlumnoCorreo.test(nuevoUsuario.correo)){
+      return false;
+    }
+    if(this.ProfeCorreo.test(nuevoUsuario.correo)){
+      nuevoUsuario.tipo_user = "Profesor"
+    }
+    if(nuevoUsuario.veiculo === "SI"){
+      nuevoUsuario.tipo_user = "Conductor"
+    }
+    if(nuevoUsuario.veiculo === "NO"){
+      nuevoUsuario.tipo_user = "Alumno"
     }
     usuarios[indice] = nuevoUsuario;
     await this.storage.set("Usuarios", usuarios);
     return true;
-  }public async Iniciar_sesion(correo: string, password: string): Promise<boolean> {
+  }
+  
+  public async Iniciar_sesion(correo: string, password: string): Promise<boolean> {
     let usuarios: any[] = await this.storage.get("Usuarios") || [];
     const usuario = usuarios.find(user => user.correo === correo && user.password === password);
     if (usuario) {
@@ -180,5 +199,14 @@ export class UsuarioService {
   public async recuperar(correo:string){
     let usuarios: any[] = await this.storage.get("Usuarios") || [];
     return usuarios.find(elemento=> elemento.correo == correo);
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Entendido'],
+    });
+    await alert.present();
   }
 }

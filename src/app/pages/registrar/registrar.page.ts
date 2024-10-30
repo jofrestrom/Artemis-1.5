@@ -37,7 +37,7 @@ export class RegistrarPage implements OnInit {
     apellido: new FormControl('', [Validators.maxLength(10), Validators.minLength(4),Validators.required]),
     rut: new FormControl('', [Validators.maxLength(10), Validators.minLength(9),Validators.required]),
     correo: new FormControl('',[Validators.minLength(4),Validators.required, Validators.pattern("[a-zA-Z0-9.]+(@duocuc.cl) || [a-zA-Z0-9.]+(@profesor.duocuc.cl)")]),
-    fecha_naci: new FormControl('', Validators.required),
+    fecha: new FormControl('', Validators.required),
     password: new FormControl('',[Validators.maxLength(10), Validators.minLength(4)]),
     confi_password: new FormControl('',[Validators.maxLength(10), Validators.minLength(4)]),
     genero: new FormControl(Validators.required),
@@ -46,7 +46,7 @@ export class RegistrarPage implements OnInit {
     marca: new FormControl(),
     modelo: new FormControl(),
     patente: new FormControl(),
-    canti_acientos: new FormControl()
+    canti_acientos: new FormControl(),
   })
 
 
@@ -107,7 +107,7 @@ export class RegistrarPage implements OnInit {
       await this.presentAlert('Perfecto', 'Registrado correctamente');
       this.persona.reset();
       await this.usuarioService.getUsuarios();
-      this.router.navigate(['']);  
+      this.router.navigate(['/inicio-sesion']);  
     } else {
       await this.presentAlert('Error', 'El usuario no se pudo registrar');
     }

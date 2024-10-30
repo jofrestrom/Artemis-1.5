@@ -12,7 +12,9 @@ export class InicioSesionPage implements OnInit {
   correo: string = '';
   password: string = '';
 
-  constructor(private router: Router, private usuarioService: UsuarioService) { }
+  constructor(private router: Router, private usuarioService: UsuarioService) {
+    
+   }
 
   ngOnInit() {
   }

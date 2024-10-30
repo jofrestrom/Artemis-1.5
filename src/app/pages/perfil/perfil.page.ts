@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-perfil',
@@ -9,11 +10,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class PerfilPage implements OnInit {
 
   infoV: boolean = false;
+  listarUser: boolean = false;
 
   miFormulario: FormGroup;
   mostrarInput: boolean = false;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) { 
     this.miFormulario = this.fb.group({
       opcion: [''],
       inputExtra: ['']
@@ -25,15 +27,18 @@ export class PerfilPage implements OnInit {
   }
 
   usuario: any;
+  usuarios: any;
 
   imagenes: any[] = [];
+  img: any;
 
-  ngOnInit(){
+  async ngOnInit(){
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+    this.usuarios = await this.usuarioService.getUsuarios();
     console.log(this.usuario)
   }
 
-  async cambio(){
+  async mostrarInfo(){
     // Recuperar marca y modelo de localStorage
     const marca = this.usuario.marca;
     const modelo = this.usuario.modelo;
@@ -58,7 +63,15 @@ export class PerfilPage implements OnInit {
   }
 
   ocultar(){
-    this.infoV = false
+    this.infoV = false;
+  }
+  
+  ocultarUser(){
+    this.listarUser = false;
+  }
+
+  async listarUsers(){
+    this.listarUser = true;
   }
 
 }
