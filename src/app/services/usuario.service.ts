@@ -102,7 +102,7 @@ export class UsuarioService {
       return false; 
     }
     if (!this.ProfeCorreo.test(usuario.correo) && !this.AlumnoCorreo.test(usuario.correo)){
-      return false;
+      return false; 
     } 
     
     if(this.ProfeCorreo.test(usuario.correo)){

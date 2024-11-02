@@ -5,5 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ViajeService {
 
-  constructor() { }
+  constructor(private storage: Storage) { }
+
+
+
 }

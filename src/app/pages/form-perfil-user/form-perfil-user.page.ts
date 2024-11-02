@@ -25,7 +25,6 @@ export class FormPerfilUserPage implements OnInit {
   }
   
   async ngOnInit() {
-
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
     this.Usuario.patchValue(this.usuario);
   }

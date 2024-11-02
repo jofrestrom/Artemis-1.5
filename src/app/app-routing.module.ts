@@ -33,6 +33,10 @@ const routes: Routes = [
     path: 'form-perfil-user',
     loadChildren: () => import('./pages/form-perfil-user/form-perfil-user.module').then( m => m.FormPerfilUserPageModule)
   },
+  {
+    path: 'form-viajes',
+    loadChildren: () => import('./pages/form-viajes/form-viajes.module').then( m => m.FormViajesPageModule)
+  },
 ];
 
 @NgModule({
