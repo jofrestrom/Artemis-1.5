@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-
+  
   
   <ion-tabs>
     <ion-tab-bar slot="bottom">
@@ -25,7 +25,10 @@
       <ion-tab-button tab="perfil">
         <ion-icon name="person-circle-sharp"></ion-icon>
       </ion-tab-button>
-    </ion-tab-bar>
+    <ion-tab-button tab="form-viajes" *ngIf="usuario.tipo_user == 'Conductor' ">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
   </ion-tabs>
 
 </ion-content>

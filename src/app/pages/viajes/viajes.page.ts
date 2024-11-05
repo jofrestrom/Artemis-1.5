@@ -9,7 +9,11 @@ export class ViajesPage implements OnInit {
 
   constructor() { }
 
+  Viajes: any;
+
   ngOnInit() {
+    this.Viajes = JSON.parse(localStorage.getItem('Viajes') || '');
+
   }
 
 }

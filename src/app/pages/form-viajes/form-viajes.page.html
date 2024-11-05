@@ -1,14 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>form-Viajes</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
+  <ion-card>
+    <ion-card-content>
+      <!--<div id="map_html" style="height: 300px;"></div>-->
+      
+      <form [formGroup] = "viaje">
+        <ion-input formControlName = "destino" type="text" label="DESTINO" labelPlacement="floating"></ion-input>
+        <ion-input formControlName = "asientos" type="number" label="CANTIDAD DE ASIENTOS" labelPlacement="floating"></ion-input>
+        <ion-input formControlName = "precio" type="number" label="VALOR" labelPlacement="floating"></ion-input>
+        <ion-button (click)="crear()">CREAR VIAJE</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 <ion-content>
-  <form>
-    
-    <ion-input></ion-input>
-
-  </form>
-
 </ion-content>

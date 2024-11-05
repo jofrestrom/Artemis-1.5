@@ -16,6 +16,13 @@ const routes: Routes = [
       },{
         path: 'viajes',
         loadChildren: () => import('../viajes/viajes.module').then( m => m.ViajesPageModule)
+      },{
+        path: 'form-viajes',
+        loadChildren: () => import('../form-viajes/form-viajes.module').then( m => m.FormViajesPageModule)
+      },
+      {
+        path: 'detalle-reserva',
+        loadChildren: () => import('../detalle-reserva/detalle-reserva.module').then( m => m.DetalleReservaPageModule)
       },
     ]
   }

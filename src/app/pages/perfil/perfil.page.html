@@ -7,6 +7,7 @@
 <ion-content>
   <ion-card >
     <ion-card-header>
+      <p id="editar"><a routerLink="/form-perfil-user">Editar perfil</a></p>
       <ion-avatar>
         <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
@@ -14,7 +15,6 @@
         <ion-card-subtitle>{{usuario.tipo_user}}</ion-card-subtitle>
         <ion-card-title>{{usuario.nombre}} {{usuario.apellido}}</ion-card-title>
         <ion-card-subtitle>Alias:</ion-card-subtitle>
-        <ion-button><a routerLink="/form-perfil-user">Editar perfil</a></ion-button>
       </label>
     </ion-card-header>
     
