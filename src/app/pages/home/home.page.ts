@@ -8,7 +8,7 @@ import { NavController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(private navController: NavController) {}
+  constructor() {}
 
   usuario: any;
 
@@ -16,9 +16,5 @@ export class HomePage {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
   }
 
-  close(){
-    localStorage.removeItem('usuario');
-    this.navController.navigateRoot('/inicio-sesion');
-  }
-
+ 
 }

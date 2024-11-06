@@ -26,7 +26,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
   },
   {
-    path: 'e404',
+    path: '**', //tienes que arreglar esto, REVISA BIEN!!!.
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
   {

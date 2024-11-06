@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class PerfilPage implements OnInit {
   miFormulario: FormGroup;
   mostrarInput: boolean = false;
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) { 
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService,private navController: NavController) { 
     this.miFormulario = this.fb.group({
       opcion: [''],
       inputExtra: ['']
@@ -73,5 +74,10 @@ export class PerfilPage implements OnInit {
   async listarUsers(){
     this.listarUser = true;
   }
+  close(){
+    localStorage.removeItem('usuario');
+    this.navController.navigateRoot('/inicio-sesion');
+  }
+
 
 }

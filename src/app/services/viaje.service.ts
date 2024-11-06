@@ -2,22 +2,29 @@ import { Injectable } from '@angular/core';
 
 import { Storage } from '@ionic/storage-angular';
 
+import * as uuid from 'uuid';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ViajeService {
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {
+
+    this.init();
+  }
 
   usuario: any;
 
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-
   }
 
   async init(){
     await this.storage.create();
+    
+    const myId = uuid.v4()
+
     let viaje1 = {
       id: '1',
       conductor: 'Juanito Alimaña',

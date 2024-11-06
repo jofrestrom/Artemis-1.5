@@ -8,6 +8,9 @@ import 'leaflet-routing-machine';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ViajeService } from 'src/app/services/viaje.service';
 
+import * as uuid from 'uuid';
+
+
 @Component({
   selector: 'app-form-viajes',
   templateUrl: './form-viajes.page.html',
@@ -28,9 +31,9 @@ export class FormViajesPage implements OnInit {
     estado: new FormControl(),
     pasajeros: new FormControl([])
   });
-
+  
   usuario: any;
-
+  
   viajes: any[] = [];
   private mapa: L.Map | undefined;
   private geocoder: G.Geocoder | undefined;
@@ -39,56 +42,45 @@ export class FormViajesPage implements OnInit {
   direccion: string = "";
   distancia_metros: number = 0;
   tiempo_segundos: number = 0;
-
-
+  
+  
   constructor( private ViajeServices: ViajeService,  private usuarioService: UsuarioService) { }
-
+  
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
     this.initMap();
   }
-
-  async crear(){
-
-    this.viaje.controls.id.setValue(12);
-
-    if(await this.ViajeServices.CrearViaje(this.viaje.value)){
-      console.log(this.viaje);
-      alert("creado con exito")
-    }
-  }
-
   initMap(){
     try {
-      if(this.mapa){
-        this.mapa.off();
-        this.mapa.remove();
-      }
-  
-      this.mapa = L.map('map_html').setView([-33.59837122676798, -70.57877634597855], 16);
-  
+      //ACA CARGAMOS E INICIALIZAMOS EL MAPA:
+      //this.mapa = L.map("map_html").locate({setView:true, maxZoom:16});
+      this.mapa = L.map("map_html").setView([-33.59844843494428, -70.57879355897805],19);
+      
+      //ES LA PLANTILLA PARA QUE SEA VEA EL MAPA:
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 15,
+        maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(this.mapa);
   
       this.geocoder = G.geocoder({
-        placeholder: "Buscar direccion",
-        errorMessage: "Direccion no encontrada"
+        placeholder: "Ingrese dirección a buscar",
+        errorMessage: "Dirección no encontrada"
       }).addTo(this.mapa);
-  
-      this.geocoder.on('markgeocode', (e) => {
-        let lat =e.geocode.properties['lat'];
-        let log =e.geocode.properties['lon'];
-        this.viaje.controls.destino.setValue(e.geocode.properties['Display_name'])
-  
+
+      this.geocoder.on('markgeocode', (e)=>{
+        let lat = e.geocode.properties['lat'];
+        let lon = e.geocode.properties['lon'];
+        this.viaje.controls.destino.setValue(e.geocode.properties['display_name']);
+        
+        this.viaje.controls.id.setValue('uuidv4()');
         this.viaje.controls.latit.setValue(lat);
-        this.viaje.controls.longit.setValue(log);
-  
+        this.viaje.controls.longit.setValue(lon);
+        console.log(this.viaje.value);
+
         if(this.mapa){
           L.Routing.control({
             waypoints: [L.latLng(-33.608552227594245, -70.58039819211703),
-              L.latLng(lat,log)],
+              L.latLng(lat,lon)],
               fitSelectedRoutes: true,
             }).on('routesfound', (e)=>{
               this.viaje.controls.metros_distancia.setValue(e.routes[0].summary.totalDistance);
@@ -97,9 +89,20 @@ export class FormViajesPage implements OnInit {
         }
       });
     } catch (error) {
-      
-      console.log(error);
-
+      console.log(error)
     }
   }
+
+  async crear(){
+    const myId = uuid.v4()
+
+    const nombreCondu = this.usuario.nombre + ' ' + this.usuario.apellido
+    
+    if(await this.ViajeServices.CrearViaje(this.viaje.value)){
+      console.log(this.viaje.value);
+      alert("creado con exito")
+    }
+  }
+
+
 }
