@@ -1,0 +1,18 @@
+
+ion-grid {
+    background: url('../Artemis_icon/white.png') no-repeat center center fixed;
+    background-size: contain; // Ajusta el tamaño para que se contenga en la pantalla
+    background-attachment: fixed;
+    background-color: #ec0001;
+    color: #ec0001; 
+    height: fit-content;
+  }
+  
+  ion-card {
+    background-color: rgba(0, 0, 0, 0.6); // Fondo semi-transparente en el card para legibilidad.
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  
+  

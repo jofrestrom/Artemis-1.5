@@ -7,23 +7,25 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="viajes">
+          <ion-icon name="car-sport-sharp"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="administrar" *ngIf="usuario.tipo_user == 'Administrador' ">
+          <ion-icon name="id-card-sharp"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="perfil">
+          <ion-icon name="person-circle-sharp"></ion-icon>
+        </ion-tab-button>
+      <ion-tab-button tab="form-viajes" *ngIf="usuario.tipo_user == 'Conductor' ">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+    </ion-tabs>
+  </ion-grid>
   
-  
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="viajes">
-        <ion-icon name="car-sport-sharp"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="administrar" *ngIf="usuario.tipo_user == 'Administrador' ">
-        <ion-icon name="id-card-sharp"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="perfil">
-        <ion-icon name="person-circle-sharp"></ion-icon>
-      </ion-tab-button>
-    <ion-tab-button tab="form-viajes" *ngIf="usuario.tipo_user == 'Conductor' ">
-      <ion-icon name="add-circle-outline"></ion-icon>
-    </ion-tab-button>
-  </ion-tab-bar>
-  </ion-tabs>
 
 </ion-content>

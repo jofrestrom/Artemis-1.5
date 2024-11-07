@@ -9,12 +9,15 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
 
-  <ion-card>
-    <br>
-    <ion-input [(ngModel)]="correo" type="text" label="Correo" labelPlacement="floating"></ion-input>
-    <br>
-    <ion-button (click)="enviar()">Enviar</ion-button>
-  </ion-card>
+    
+    <ion-card>
+      <br>
+      <ion-input [(ngModel)]="correo" type="text" label="Correo" labelPlacement="floating"></ion-input>
+      <br>
+      <ion-button (click)="enviar()">Enviar</ion-button>
+    </ion-card>
+  </ion-grid>
 
 </ion-content>

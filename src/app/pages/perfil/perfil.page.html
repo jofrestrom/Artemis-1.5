@@ -10,66 +10,67 @@
 </ion-header>
 
 <ion-content>
-  <ion-card >
-    <ion-card-header>
-      <p id="editar"><a routerLink="/form-perfil-user">Editar perfil</a></p>
-      <ion-avatar>
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <label>
-        <ion-card-subtitle>{{usuario.tipo_user}}</ion-card-subtitle>
-        <ion-card-title>{{usuario.nombre}} {{usuario.apellido}}</ion-card-title>
-        <ion-card-subtitle>Alias:</ion-card-subtitle>
-      </label>
-    </ion-card-header>
-    
-    <ion-card-content>
-      <p>Rut: {{usuario.rut}}</p>
-      <p>Correo: {{usuario.correo}}</p>
-      <p>Dirección:</p>
-      <p>Fecha nacimiento: {{usuario.fecha}}</p>
-      <p>Género: {{usuario.genero}}</p>
-      <p>Teléfono:</p>
-    </ion-card-content>
-    <ion-button fill="clear" (click)="ocultar()" *ngIf="usuario.tipo_user == 'Conductor' " >ocultar informción</ion-button>
-    <ion-button fill="clear" value="veicular" (click)="mostrarInfo()" *ngIf="usuario.tipo_user == 'Conductor' ">Información Vehicular</ion-button>
-  </ion-card>
-  <ion-card *ngIf="infoV">
-    <img id="imagenP" *ngFor="let imagen of imagenes" [src]="imagen.urls.small" />
-    <ion-card-header>
-      <ion-card-title>{{usuario.marca}}</ion-card-title>
-      <ion-card-subtitle>{{usuario.modelo}}</ion-card-subtitle>
-    </ion-card-header>
-    
-    <ion-card-content>
-      <p>veiculo con capacidad de {{usuario.canti_acientos}} acientos de color </p>
-    </ion-card-content>
-  </ion-card>
-  
-  <div >
-
-    <ion-card *ngIf="usuario.tipo_user == 'Administrador' ">
-      <ion-button fill="clear" (click)="ocultarUser()">Informacion Personal</ion-button>
-      <ion-button fill="clear" (click)="listarUsers()">mostrar Usuarios</ion-button>
-      <ion-button fill="clear">Mostrar Viajes</ion-button>
-    </ion-card>
-
-    <ion-card *ngIf="listarUser">
+  <ion-grid>
+    <ion-card >
       <ion-card-header>
-        <ion-card-title>Lista de usuarios</ion-card-title>
-        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        <p id="editar"><a routerLink="/form-perfil-user">Editar perfil</a></p>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <label>
+          <ion-card-subtitle>{{usuario.tipo_user}}</ion-card-subtitle>
+          <ion-card-title>{{usuario.nombre}} {{usuario.apellido}}</ion-card-title>
+          <ion-card-subtitle>Alias:</ion-card-subtitle>
+        </label>
       </ion-card-header>
+      
       <ion-card-content>
-        <ion-list *ngFor="let user of usuarios">
-          <ion-item *ngIf="user.tipo_user != 'Administrador' ">
-          <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>{{user.rut}} || {{user.nombre}} || {{user.tipo_user}}</ion-label>
-          </ion-item>
-        </ion-list>
+        <p>Rut: {{usuario.rut}}</p>
+        <p>Correo: {{usuario.correo}}</p>
+        <p>Dirección:</p>
+        <p>Fecha nacimiento: {{usuario.fecha}}</p>
+        <p>Género: {{usuario.genero}}</p>
+        <p>Teléfono:</p>
+      </ion-card-content>
+      <ion-button fill="clear" (click)="ocultar()" *ngIf="usuario.tipo_user == 'Conductor' " >ocultar informción</ion-button>
+      <ion-button fill="clear" value="veicular" (click)="mostrarInfo()" *ngIf="usuario.tipo_user == 'Conductor' ">Información Vehicular</ion-button>
+    </ion-card>
+    <ion-card *ngIf="infoV">
+      <img id="imagenP" *ngFor="let imagen of imagenes" [src]="imagen.urls.small" />
+      <ion-card-header>
+        <ion-card-title>{{usuario.marca}}</ion-card-title>
+        <ion-card-subtitle>{{usuario.modelo}}</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <p>veiculo con capacidad de {{usuario.canti_acientos}} acientos de color </p>
       </ion-card-content>
     </ion-card>
+    
+    <div >
+    
+      <ion-card *ngIf="usuario.tipo_user == 'Administrador' ">
+        <ion-button fill="clear" (click)="ocultarUser()">Informacion Personal</ion-button>
+        <ion-button fill="clear" (click)="listarUsers()">mostrar Usuarios</ion-button>
+        <ion-button fill="clear">Mostrar Viajes</ion-button>
+      </ion-card>
+    
+      <ion-card *ngIf="listarUser">
+        <ion-card-header>
+          <ion-card-title>Lista de usuarios</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list *ngFor="let user of usuarios">
+            <ion-item *ngIf="user.tipo_user != 'Administrador' ">
+            <ion-thumbnail slot="start">
+                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+              </ion-thumbnail>
+              <ion-label>{{user.rut}} || {{user.nombre}} || {{user.tipo_user}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
   </div>
-
+</ion-grid>
 </ion-content>
