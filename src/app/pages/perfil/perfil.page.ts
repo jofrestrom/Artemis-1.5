@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class PerfilPage implements OnInit {
   miFormulario: FormGroup;
   mostrarInput: boolean = false;
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService,private navController: NavController) { 
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService,private navController: NavController,private alertController: AlertController) { 
     this.miFormulario = this.fb.group({
       opcion: [''],
       inputExtra: ['']
@@ -56,7 +56,7 @@ export class PerfilPage implements OnInit {
       const data = await response.json();
       
       // Almacenar las imágenes obtenidas
-      this.imagenes = data.results.slice(9,10);
+      this.imagenes = data.results.slice(0,1);
       this.infoV = true;
     } catch (error) {
       console.error('Error al buscar imágenes:', error);
@@ -74,10 +74,39 @@ export class PerfilPage implements OnInit {
   async listarUsers(){
     this.listarUser = true;
   }
-  close(){
-    localStorage.removeItem('usuario');
-    this.navController.navigateRoot('/inicio-sesion');
+  close(rut: string){
+    this.presentAlertClose(rut)
   }
 
+  async presentAlertClose(user: string) {
+    const alert = await this.alertController.create({
+      header: '¿Porque te vas?',
+      message: `¿Estás seguro de que te quieres ir??`,
+      buttons: [
+        {
+          text: 'Na, era mentira me quedo',
+          role: 'cancel',
+        },
+        {
+          text: 'Chao, no vimo',
+          handler: () => {
+            localStorage.removeItem('usuario');            
+            this.usuarios = this.usuarioService.getUsuarios(); // Actualiza la lista de usuarios
+            this.navController.navigateRoot('/inicio-sesion');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Entendido'],
+    });
+    await alert.present();
+  }
 
 }

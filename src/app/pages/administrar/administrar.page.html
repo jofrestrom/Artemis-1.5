@@ -1,12 +1,3 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Administrar</ion-title>
-    <ion-buttons slot="end">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -60,9 +51,8 @@
                   <ion-label>Alumno</ion-label>
                 </ion-item>
               </ion-radio-group>
-              <ion-button>REGISTRAR</ion-button>
-              <ion-button>MODIFICAR</ion-button>
-              <ion-button>ELIMINAR</ion-button>
+              <ion-button (click)="registrar()" >REGISTRAR</ion-button>
+              <ion-button -* >MODIFICAR</ion-button>
               <ion-button>LIMPIAR</ion-button>
             </form>
           </ion-card-content>

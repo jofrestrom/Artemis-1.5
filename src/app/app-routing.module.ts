@@ -26,12 +26,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
   },
   {
-    path: '**', //tienes que arreglar esto, REVISA BIEN!!!.
-    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
-  },
-  {
     path: 'form-perfil-user',
     loadChildren: () => import('./pages/form-perfil-user/form-perfil-user.module').then( m => m.FormPerfilUserPageModule)
+  },
+  {
+    path: '**', //tienes que arreglar esto, REVISA BIEN!!!.
+    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
   },
   
   

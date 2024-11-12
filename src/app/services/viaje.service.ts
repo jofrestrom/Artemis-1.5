@@ -52,5 +52,9 @@ export class ViajeService {
     return true
   }
 
+  public async getViajes(): Promise<any []>{
+    return await this.storage.get("Viajes");
+  }
+
 
 }

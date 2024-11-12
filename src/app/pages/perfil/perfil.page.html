@@ -1,19 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>perfil</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="close()">
-        <ion-icon name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <ion-grid>
     <ion-card >
       <ion-card-header>
         <p id="editar"><a routerLink="/form-perfil-user">Editar perfil</a></p>
+        
         <ion-avatar>
           <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
@@ -31,6 +21,10 @@
         <p>Fecha nacimiento: {{usuario.fecha}}</p>
         <p>Género: {{usuario.genero}}</p>
         <p>Teléfono:</p>
+        <ion-button (click)="close(usuario.rut)">
+          <ion-icon name="log-out"></ion-icon>
+          Cerrar sesion
+        </ion-button> 
       </ion-card-content>
       <ion-button fill="clear" (click)="ocultar()" *ngIf="usuario.tipo_user == 'Conductor' " >ocultar informción</ion-button>
       <ion-button fill="clear" value="veicular" (click)="mostrarInfo()" *ngIf="usuario.tipo_user == 'Conductor' ">Información Vehicular</ion-button>
@@ -43,7 +37,7 @@
       </ion-card-header>
       
       <ion-card-content>
-        <p>veiculo con capacidad de {{usuario.canti_acientos}} acientos de color </p>
+        <p>vehiculo con capacidad de {{usuario.canti_acientos}} asientos de color </p>
       </ion-card-content>
     </ion-card>
     

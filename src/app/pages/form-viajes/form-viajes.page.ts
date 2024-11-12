@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import * as L from 'leaflet';
 import * as G from 'leaflet-control-geocoder';
@@ -19,16 +19,16 @@ import * as uuid from 'uuid';
 export class FormViajesPage implements OnInit {
   
   viaje = new FormGroup({
-    id: new FormControl(),
-    conductor: new FormControl(),
-    asientos: new FormControl(),
-    precio: new FormControl(),
-    destino: new FormControl(),
-    latit: new FormControl(),
-    longit: new FormControl(),
-    metros_distancia: new FormControl(),
+    id: new FormControl('',[Validators.required]),
+    conductor: new FormControl('', [Validators.required]),
+    asientos: new FormControl( [Validators.required]),
+    precio: new FormControl( [Validators.required]),
+    destino: new FormControl('',[Validators.required]),
+    latit: new FormControl( [Validators.required]),
+    longit: new FormControl( [Validators.required]),
+    metros_distancia: new FormControl( [Validators.required]),
     minutos: new FormControl(),
-    estado: new FormControl(),
+    estado: new FormControl('pendiente'),
     pasajeros: new FormControl([])
   });
   
@@ -72,6 +72,8 @@ export class FormViajesPage implements OnInit {
         let lon = e.geocode.properties['lon'];
         this.viaje.controls.destino.setValue(e.geocode.properties['display_name']);
         
+
+
         this.viaje.controls.id.setValue('uuidv4()');
         this.viaje.controls.latit.setValue(lat);
         this.viaje.controls.longit.setValue(lon);
@@ -97,6 +99,7 @@ export class FormViajesPage implements OnInit {
     const myId = uuid.v4()
 
     const nombreCondu = this.usuario.nombre + ' ' + this.usuario.apellido
+    this.viaje.controls.conductor.setValue(nombreCondu);
     
     if(await this.ViajeServices.CrearViaje(this.viaje.value)){
       console.log(this.viaje.value);

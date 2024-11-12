@@ -1,31 +1,22 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>viajes</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-col size="12" size-md="6">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Viaje a la Montaña</ion-card-title>
-            <ion-card-subtitle>Salida: 10:00 AM</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            <p>Tipo de Vehículo: SUV</p>
-            <p>Duración: 3 horas</p>
-            <ion-chip color="success">
-              <ion-icon name="star"></ion-icon>
-              <ion-label>4.9</ion-label>
-            </ion-chip>
-            <p routerLink="/home/detalle-reserva" >Ver viaje</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+        <div *ngFor="let v of viajes">
+          <ion-card  *ngIf = "v.estado == 'pendiente' ">
+            <ion-card-header>
+              <ion-card-title>{{v.destino}}</ion-card-title>
+              <ion-card-subtitle>estado: {{v.estado}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+
+              <p>Cantidad de asientos: {{v.asientos}}</p>
+              <ion-chip color="success">
+                <ion-icon name="star"></ion-icon>
+                <ion-label>4.9</ion-label>
+              </ion-chip>
+              <p routerLink="/home/detalle-reserva/{{v.id}}" >Ver viaje</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
   </ion-grid>
-  <div id="map_html"></div>
 
 </ion-content>
