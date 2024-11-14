@@ -1,0 +1,54 @@
+
+
+/* Estilos generales de la página */
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Animación para el icono de alerta */
+  .error-icon {
+    font-size: 100px;
+    color: #e74c3c;
+    animation: bounce 2s infinite;
+    margin-top: 20px;
+  }
+  
+  /* Título 404 */
+  .error-title {
+    font-size: 80px;
+    color: #e74c3c;
+    animation: fadeIn 1.5s ease-in-out;
+    margin: 0;
+  }
+  
+  /* Mensaje de error */
+  .error-message {
+    font-size: 18px;
+    color: #555;
+    margin-top: -10px;
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  /* Animaciones */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

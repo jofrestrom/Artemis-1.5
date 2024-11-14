@@ -1,13 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>form-Viajes</ion-title>
-    <ion-buttons slot="end">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
+  <ion-grid id="global">
   <ion-card>
     <ion-card-content>
       
@@ -15,7 +8,7 @@
 
     </ion-card-content>
   </ion-card>
-  <ion-card>
+  <ion-card >
     <ion-grid>
       <ion-card-content>
         <form [formGroup]="viaje">
@@ -39,4 +32,5 @@
       </ion-card-content>
     </ion-grid>
   </ion-card>
+</ion-grid>
 </ion-content>
