@@ -95,6 +95,11 @@ export class RegistrarPage implements OnInit {
 
   async registrar() {
     
+
+    
+
+
+
     if(this.persona.controls.password.value != this.persona.controls.confi_password.value){
       await this.presentAlert('Problema', 'las contraseñas no coinsiden');
     }else if ( await this.usuarioService.crearUsuario(this.persona.value)){

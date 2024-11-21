@@ -3,6 +3,7 @@ import { AlertController } from '@ionic/angular';
 
 
 import { Storage } from '@ionic/storage-angular';
+import { FireServiceService } from './fire-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -174,17 +175,6 @@ export class UsuarioService {
     usuarios[indice] = nuevoUsuario;
     await this.storage.set("Usuarios", usuarios);
     return true;
-  }
-  
-  public async Iniciar_sesion(correo: string, password: string): Promise<boolean> {
-    let usuarios: any[] = await this.storage.get("Usuarios") || [];
-    const usuario = usuarios.find(user => user.correo === correo && user.password === password);
-    if (usuario) {
-      this.usuarioAutenticado = usuario;
-      localStorage.setItem("Usuario", JSON.stringify(this.usuarioAutenticado));
-      return true;
-    }
-    return false;
   }
   public getUsuarioValido() {
     return this.usuarioAutenticado;

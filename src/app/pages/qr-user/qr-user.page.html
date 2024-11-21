@@ -1,0 +1,55 @@
+<ion-content>
+  <ion-grid>
+    <ion-card>
+      <ion-card-content>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <br>
+        <label>
+          <ion-card-title>{{usuario.nombre}} {{usuario.apellido}}</ion-card-title>
+        </label>
+        <br>
+        <br>
+        <label>
+          <ion-card-title>
+            <p>
+              Conductor:
+            </p>
+            <p>
+              Patente:
+            </p>
+            <p>
+              Modelo:
+            </p>
+            <p>
+              Marca:
+            </p>
+            <p>
+              Color:
+            </p>
+          </ion-card-title>
+        </label>
+        <br>
+        <br>
+        <qrcode  
+        [qrdata]="usuario.rut"
+        [allowEmptyString]="true"
+        [ariaLabel]="'QR Code image with the following content...'"
+        [cssClass]="'center'"
+        [colorDark]="'#000000ff'"
+        [colorLight]="'#ffffffff'"
+        [elementType]="'canvas'"
+        [errorCorrectionLevel]="'M'"
+        [imageSrc]="'./assets/icon/favicon.png'"
+        [imageHeight]="75"
+        [imageWidth]="75"
+        [margin]="4"
+        [scale]="1"
+        [title]="'A custom title attribute'"
+        [width]="300">
+    </qrcode>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>

@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ViajesPage } from './viajes.page';
+import { QRCompartirPage } from './qr-compartir.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ViajesPage,
-    
+    component: QRCompartirPage
   }
 ];
 
@@ -15,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ViajesPageRoutingModule {}
+export class QRCompartirPageRoutingModule {}

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Storage } from '@ionic/storage-angular';
 
-import * as uuid from 'uuid';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +13,7 @@ export class ViajeService {
   }
 
   usuario: any;
+  ViajeAutenticado: any = null;
 
   ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
@@ -22,8 +21,6 @@ export class ViajeService {
 
   async init(){
     await this.storage.create();
-    
-    const myId = uuid.v4()
 
     let viaje1 = {
       id: '1',
@@ -42,18 +39,71 @@ export class ViajeService {
   }
   public async CrearViaje(viaje: any): Promise<boolean>{
     let Viajes: any[] = await this.storage.get("Viajes") || [];
-
+    
     if(Viajes.find(v => v.id == viaje.id) != undefined){
       return false;
     }
+    
 
     Viajes.push(viaje);
     await this.storage.set("Viajes", Viajes)
     return true
   }
 
+  async buscarViajeP(rut: string): Promise<any | null> {
+    const viajes: any[] = await this.storage.get("Viajes") || [];
+    
+    const viaje = viajes.find(v=>v.pasajeros === rut)
+
+    if(viaje){
+      console.log("se encontro");
+      return viaje
+    } 
+    console.log("no hay pasajeros");
+    
+    return null; // Si no se encuentra, devolver null
+  }
+  
+
+  public async tomar_Viaje(rut: string): Promise<any>{
+    const viajes: any[] = await this.storage.get("Viajes") || [];
+    const viaje = viajes.find(v => v.pasajeros === rut)
+
+    if(viaje.pasajeros.length >= 4){
+      alert("el veiculo esta lleno")
+    }else{
+      alert("viaje tomado con exito")
+      viaje.pasajeros.push(rut)
+    }
+
+    return false;
+    
+  }
+
   public async getViajes(): Promise<any []>{
     return await this.storage.get("Viajes");
+  }
+
+  public async getviaje(id :string):Promise <any>{
+    let viajes: any[] = await this.storage.get("Viajes") || [];
+    console.log("viaje a tomar: ", viajes);
+    return viajes.find(v => v.id == id)
+
+  }
+
+  public async actualizar_viaje(id: string, pasajero: any): Promise<boolean>{
+    let viajes: any[] = await this.storage.get("Viajes") || [];
+    let indice: number = viajes.findIndex(v => v.id==id);
+    if(indice==-1){
+      return false;
+    }
+    if(viajes[indice].pasajeros.find((pasajero: any) => pasajero.rut == pasajero.rut)){
+      return false;
+    }
+    viajes[indice].pasajeros.push(pasajero);
+    viajes[indice].asientos_disp = viajes[indice].asientos_disp - 1;
+    await this.storage.set("Viajes",viajes);
+    return true;
   }
 
 

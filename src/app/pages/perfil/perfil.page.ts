@@ -29,12 +29,14 @@ export class PerfilPage implements OnInit {
 
   usuario: any;
   usuarios: any;
+  viaje: any;
 
   imagenes: any[] = [];
-  img: any;
+  img: any; 
 
   async ngOnInit(){
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+    
     this.usuarios = await this.usuarioService.getUsuarios();
     console.log(this.usuario)
   }

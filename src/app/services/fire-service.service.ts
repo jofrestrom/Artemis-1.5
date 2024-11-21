@@ -4,9 +4,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class FireServiceService {
+export class FireServiceService{
 
-  constructor(private fireStore: AngularFirestore ) { }
+  constructor(private storage: Storage, private fireStore: AngularFirestore ) { }
 
   async CrearUsuario(usuario: any){
     const docRef = this.fireStore.collection('Usuarios').doc(usuario.rut);

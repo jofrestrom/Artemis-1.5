@@ -8,4 +8,17 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <!-- Contenedor del mapa con estilo para asegurar visibilidad -->
+    <div id="map" style="height: 300px;"></div>
+    <ion-card-header>
+      <ion-card-title>{{viaje.destino}}</ion-card-title>
+      <ion-card-subtitle>Valor: {{viaje.valor | currency}}</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Si está de acuerdo con la ruta y la tarifa, presione "Tomar viaje"
+    </ion-card-content>
+    <ion-button size="block" (click)="tomar_viaje()">Tomar viaje</ion-button>
+  </ion-card>
 </ion-content>

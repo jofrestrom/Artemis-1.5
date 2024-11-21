@@ -72,9 +72,7 @@ export class FormViajesPage implements OnInit {
         let lon = e.geocode.properties['lon'];
         this.viaje.controls.destino.setValue(e.geocode.properties['display_name']);
         
-
-
-        this.viaje.controls.id.setValue('uuidv4()');
+        this.viaje.controls.id.setValue(uuid.v4());
         this.viaje.controls.latit.setValue(lat);
         this.viaje.controls.longit.setValue(lon);
         console.log(this.viaje.value);
@@ -96,7 +94,6 @@ export class FormViajesPage implements OnInit {
   }
 
   async crear(){
-    const myId = uuid.v4()
 
     const nombreCondu = this.usuario.nombre + ' ' + this.usuario.apellido
     this.viaje.controls.conductor.setValue(nombreCondu);

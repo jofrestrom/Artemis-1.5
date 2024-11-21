@@ -21,8 +21,8 @@ const routes: Routes = [
         loadChildren: () => import('../form-viajes/form-viajes.module').then( m => m.FormViajesPageModule)
       },
       {
-        path: 'detalle-reserva',
-        loadChildren: () => import('../detalle-reserva/detalle-reserva.module').then( m => m.DetalleReservaPageModule)
+        path: 'qr-user',
+        loadChildren: () => import('../qr-user/qr-user.module').then( m => m.QRUserPageModule)
       },
     ]
   }

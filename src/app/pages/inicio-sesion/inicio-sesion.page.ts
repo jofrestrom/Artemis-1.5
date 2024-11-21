@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ViajeService } from 'src/app/services/viaje.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -12,9 +13,9 @@ export class InicioSesionPage implements OnInit {
   correo: string = '';
   password: string = '';
 
-  constructor(private router: Router, private usuarioService: UsuarioService) {
+  constructor(private router: Router, private usuarioService: UsuarioService, private viajeSer: ViajeService) {
     
-   }
+  }
 
   ngOnInit() {
   }

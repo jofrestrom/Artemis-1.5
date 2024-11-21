@@ -13,7 +13,7 @@
                 <ion-icon name="star"></ion-icon>
                 <ion-label>4.9</ion-label>
               </ion-chip>
-              <p routerLink="/home/detalle-reserva/{{v.id}}" >Ver viaje</p>
+              <ion-button routerLink="detalle-reserva/{{v.id}}" size="block" [disabled]="v.asientos_disponibles == 0">Ver detalle</ion-button>
             </ion-card-content>
           </ion-card>
         </div>
