@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class FireServiceService{
 
-  constructor(private storage: Storage, private fireStore: AngularFirestore ) { }
+  constructor(private fireStore: AngularFirestore, private fireAuth: AngularFireAuth) { }
 
   async CrearUsuario(usuario: any){
     const docRef = this.fireStore.collection('Usuarios').doc(usuario.rut);
@@ -15,8 +16,9 @@ export class FireServiceService{
     if(docActual?.exists){
       return false;
     }
-
-    await docRef.set(usuario);
+    const authuser = await this.fireAuth.createUserWithEmailAndPassword(usuario.correo,usuario.password);
+    const idUser = authuser.user?.uid
+    await docRef.set({ ...usuario,idUser});
     return true;
 
     //return this.fireStore.collection('Usuarios').doc(usuario.rut).set(usuario);
@@ -24,6 +26,22 @@ export class FireServiceService{
 
   getUsuario(rut: string){
     return this.fireStore.collection('Usuarios').doc(rut).valueChanges();
+  }
+
+  getCorreo(correo: string){
+    return this.fireStore.collection('Usuarios').doc(correo).valueChanges();
+  }
+
+  getpassword(password: string){
+    return this.fireStore.collection('Usuarios').doc(password).valueChanges();
+  }
+
+  validacion(correo: string, password: string){
+    let email = this.fireStore.collection('Usuarios').doc(correo).valueChanges();
+    let pass = this.fireStore.collection('Usuarios').doc(password).valueChanges();
+
+
+    
   }
 
   getUsuarios(){

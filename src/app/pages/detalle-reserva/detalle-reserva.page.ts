@@ -62,9 +62,7 @@ export class DetalleReservaPage implements OnInit {
     console.log("Usuario en localStorage:", usuario);
   
     var pasajero = {
-      "rut": usuario.rut,
-      "nombre": usuario.nombre,
-      "correo": usuario.correo
+      "rut": usuario.rut
     };
   
     if(await this.viajeService.actualizar_viaje(this.id, pasajero)){

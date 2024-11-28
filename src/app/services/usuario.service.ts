@@ -10,7 +10,7 @@ import { FireServiceService } from './fire-service.service';
 })
 export class UsuarioService {
 
-  constructor(private storage: Storage, private alertController: AlertController) {
+  constructor(private storage: Storage, private alertController: AlertController, private Firebase: FireServiceService) {
     this.init();
    }
 
@@ -85,12 +85,14 @@ export class UsuarioService {
       canti_acientos: '',
     }
 
-    await this.crearUsuario(admin);
-    await this.crearUsuario(Alumno);
-    await this.crearUsuario(profesor);
-    await this.crearUsuario(conductor);
+    await this.Firebase.CrearUsuario(admin);
+    await this.Firebase.CrearUsuario(Alumno);
+    await this.Firebase.CrearUsuario(profesor);
+    await this.Firebase.CrearUsuario(conductor);
   }
 
+  usuarios:any[] = [];
+  user:any[] = [];
   private usuarioAutenticado: any = null;  
   private AlumnoCorreo = /^[a-zA-Z0-9._%+-]+@duocuc\.cl$/;
   private ProfeCorreo = /^[a-zA-Z0-9._%+-]+@profesor\.duocuc\.cl$/;
@@ -116,20 +118,25 @@ export class UsuarioService {
 
     console.log(JSON.stringify(usuario));
     usuarios.push(usuario);
-    await this.storage.set("Usuarios", usuarios);
+    this.Firebase.CrearUsuario(usuario);
+    //await this.storage.set("Usuarios", usuarios);
     return true;    
   }
+
   public async inicio(correo: string, contrasena: string): Promise<any>{
-    let usuarios: any[] = await this.storage.get("Usuarios") || [];
-    const usuario = usuarios.find(user => user.correo === correo && user.password === contrasena);
+    this.Firebase.getUsuarios().subscribe(data => {
+      this.user = data
+    })
+    const usuario = this.user.find(user => user.correo === correo && user.password === contrasena);
     if (usuario) {
       this.usuarioAutenticado = usuario
       localStorage.setItem("usuario", JSON.stringify(this.usuarioAutenticado));
       return true;
     }
     return false;
-  }
 
+
+  }
   public async EliminarUsuario(rut: string): Promise<boolean>{
     let usuarios: any[] = await this.storage.get("Usuarios") || [];
     let indice = usuarios.findIndex(elemento => elemento.rut === rut);
@@ -138,17 +145,17 @@ export class UsuarioService {
     }
     usuarios.splice(indice, 1);
     await this.storage.set("Usuarios", usuarios);
+    
     await this.presentAlert("EXITO", "usuario eliminado con exito")
     return true;
   }
 
-  public async getUsuario(rut: string){
-    let usuarios: any[] = await this.storage.get("Usuarios") || [];
-    return usuarios.find(user =>user.rut === rut)
+  public async getUsuario(rut: string){ 
+    return this.Firebase.getUsuario(rut)
   }
   
   public async getUsuarios(){
-    let usuarios: any[] = await this.storage.get("Usuarios") || [];
+    let usuarios = this.Firebase.getUsuarios()
     return usuarios
   }
 

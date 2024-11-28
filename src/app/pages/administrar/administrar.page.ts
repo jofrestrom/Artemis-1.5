@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FireServiceService } from 'src/app/services/fire-service.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -12,13 +13,14 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class AdministrarPage implements OnInit {
 
   constructor(private usuarioService: UsuarioService,private router: Router, 
-    private alertController: AlertController) { 
+    private alertController: AlertController, private Firebase: FireServiceService) { 
       
     }
    
 
   async ngOnInit() {
-    this.Usuarios = await this.usuarioService.getUsuarios();
+    this.Firebase.getUsuarios();
+    //this.Usuarios = await this.usuarioService.getUsuarios();
   }
 
   Usuario = new FormGroup({
@@ -45,9 +47,9 @@ export class AdministrarPage implements OnInit {
   }
 
   async eliminar(rut: string) {
-    if (await this.usuarioService.EliminarUsuario(rut)) {
-      this.Usuarios = await this.usuarioService.getUsuarios();
-    }
+    this.Firebase.DeleteUsuario(rut)
+    this.Firebase.getUsuarios();
+    
   }
 
   async registrar() {
@@ -60,11 +62,11 @@ export class AdministrarPage implements OnInit {
     
     if(this.Usuario.controls.password.value != this.Usuario.controls.confi_password.value){
       await this.presentAlert('Problema', 'las contraseñas no coinsiden');
-    }else if ( await this.usuarioService.crearUsuario(this.Usuario.value)){
+    }else if ( await this.Firebase.CrearUsuario(this.Usuario.value)){
       await this.presentAlert('Perfecto', 'Registrado correctamente');
       this.Usuario.reset();
-      await this.usuarioService.getUsuarios();
-      this.router.navigate(['']);  
+      await this.Firebase.getUsuarios();
+      this.router.navigate(['/home']);  
     } else {
       await this.presentAlert('Error', 'El usuario no se pudo registrar');
     }

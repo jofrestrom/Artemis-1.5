@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Storage } from '@ionic/storage-angular';
+import { stringify } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -50,18 +51,32 @@ export class ViajeService {
     return true
   }
 
-  async buscarViajeP(rut: string): Promise<any | null> {
+  //async buscarids():Promise<any>{
+  //  const viajes: any[] = await this.storage.get("Viajes") || [];
+  //  console.log("mis viajes",viajes[0].id);
+  //  return viajes[0].id;
+  //}
+
+  async buscarViajeP(rut: string):Promise<boolean>{
     const viajes: any[] = await this.storage.get("Viajes") || [];
     
-    const viaje = viajes.find(v=>v.pasajeros === rut)
+    const viaje = viajes.find(v=> v.id);
+    if(rut == viaje.pasajeros.rut ){
+      console.log("hola");
+      const pasajeros = viaje.pasajeros;
+      for(let p of pasajeros){
+        console.log(p);
+        if(p.rut == rut){
+          console.log("se enconto un pasajero: ", p.rut);
+          return true; 
+        }
+      }
+    }
 
-    if(viaje){
-      console.log("se encontro");
-      return viaje
-    } 
-    console.log("no hay pasajeros");
+    console.log("no se encontro en un viaje");
     
-    return null; // Si no se encuentra, devolver null
+
+    return false; // Si no se encuentra, devolver null
   }
   
 

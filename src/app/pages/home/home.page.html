@@ -2,7 +2,9 @@
   <ion-toolbar>
     <ion-title>Artemis</ion-title>
     <ion-buttons slot="end">
-      <ion-back-button></ion-back-button>
+      <ion-button (click)="home()" >
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +14,8 @@
 
     <ion-card>
       <ion-card-content>
-        <p>hola</p>
+        <p>{{usuario.nombre}}</p>
+        <p>{{viaje}}</p>
       </ion-card-content>
     </ion-card>
   </ion-grid>
@@ -20,13 +23,13 @@
 
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="viajes" *ngIf="!mostrar">
+        <ion-tab-button tab="viajes" *ngIf="viaje">
           <ion-icon name="car-sport-sharp"></ion-icon>
         </ion-tab-button>
         <ion-tab-button tab="administrar" *ngIf="usuario.tipo_user == 'Administrador' ">
           <ion-icon name="id-card-sharp"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="qr-user" *ngIf="mostrar">
+        <ion-tab-button tab="qr-user" *ngIf="viaje && usuario.tipo_user != 'Conductor' ">
           <ion-icon name="add-circle-outline"></ion-icon>
         </ion-tab-button>
         <ion-tab-button tab="perfil">

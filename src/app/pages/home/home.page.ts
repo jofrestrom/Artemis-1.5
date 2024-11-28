@@ -9,27 +9,24 @@ import { ViajeService } from 'src/app/services/viaje.service';
 })
 export class HomePage {
 
-  constructor( private viajeSer: ViajeService) {}
+  constructor( private viajeSer: ViajeService,private navController: NavController) {}
 
   usuario: any;
-  usuarioRut: any;
+  usuarioRut: string;
   viaje: any;
-  mostrar: boolean = true;
+  viajeid : any;
+
   
   ngOnInit(){
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
     this.usuarioRut = this.usuario.rut
-
     this.viaje = this.viajeSer.buscarViajeP(this.usuarioRut)
-
-    if(!this.viaje){
-      this.mostrar = false
-      
-    }else{
-      console.log(this.viaje);
-      this.mostrar = this.mostrar
+    console.log("viaje " ,this.viaje);
+    //this.viajeid = this.viajeSer.buscarids();
     
-    }
   }
-  
+  home(){
+    this.navController.navigateRoot('/home');
+  }
+
 }
