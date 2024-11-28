@@ -14,14 +14,12 @@ export class HomePage {
   usuario: any;
   usuarioRut: string;
   viaje: any;
-  viajeid : any;
 
   
-  ngOnInit(){
+  async ngOnInit(){
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-    this.usuarioRut = this.usuario.rut
-    this.viaje = this.viajeSer.buscarViajeP(this.usuarioRut)
-    console.log("viaje " ,this.viaje);
+    this.viaje = await this.viajeSer.buscarViajeP(this.usuario.rut)
+    console.log("viaje " ,JSON.stringify(this.viaje));
     //this.viajeid = this.viajeSer.buscarids();
     
   }

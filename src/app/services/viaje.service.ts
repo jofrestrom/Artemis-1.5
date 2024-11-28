@@ -51,32 +51,24 @@ export class ViajeService {
     return true
   }
 
-  //async buscarids():Promise<any>{
-  //  const viajes: any[] = await this.storage.get("Viajes") || [];
-  //  console.log("mis viajes",viajes[0].id);
-  //  return viajes[0].id;
-  //}
-
-  async buscarViajeP(rut: string):Promise<boolean>{
+  async buscarViajeP(rut: string){
     const viajes: any[] = await this.storage.get("Viajes") || [];
     
     const viaje = viajes.find(v=> v.id);
+    console.log("viaje encontrado", viaje);
     if(rut == viaje.pasajeros.rut ){
       console.log("hola");
-      const pasajeros = viaje.pasajeros;
-      for(let p of pasajeros){
-        console.log(p);
-        if(p.rut == rut){
-          console.log("se enconto un pasajero: ", p.rut);
-          return true; 
-        }
+    }
+    const pasajeros = viaje.pasajeros;
+    for(let p of pasajeros){
+      console.log(p);
+      if(p.rut == rut){
+        console.log("se enconto al pasajero: ", p.rut);
+        return await "Si tiene"; 
       }
     }
 
-    console.log("no se encontro en un viaje");
-    
-
-    return false; // Si no se encuentra, devolver null
+    return await "No tiene"; // Si no se encuentra, devolver null
   }
   
 
