@@ -95,21 +95,17 @@ export class FormViajesPage implements OnInit {
       console.log(error)
     }
   }
-  capturarHora(hora: any) {
-    const horaLocal = new Date(hora).toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    console.log('Hora local:', horaLocal);
-  }
-  
-  
+
   async crear(){
 
     const nombreCondu = this.usuario.nombre + ' ' + this.usuario.apellido
     this.viaje.controls.conductor.setValue(nombreCondu);
     
-    
+    const guardar_hora = this.viaje.get('hora_salida')?.value
+    const horaformat = new Date(guardar_hora).toLocaleTimeString('es-ES');
+    this.viaje.controls.hora_salida.setValue(horaformat)
+    console.log("hora formateada: ", horaformat);
+    console.log(this.viaje.value);
     
 
     //if(await this.ViajeServices.CrearViaje(this.viaje.value)){
