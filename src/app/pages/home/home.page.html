@@ -23,19 +23,19 @@
 
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="viajes" *ngIf="viaje == 'No tiene'">
+        <ion-tab-button tab="viajes" *ngIf="viaje == 'No tiene' || usuario.tipo_user == 'Administrador'" >
           <ion-icon name="car-sport-sharp"></ion-icon>
         </ion-tab-button>
         <ion-tab-button tab="administrar" *ngIf="usuario.tipo_user == 'Administrador' ">
           <ion-icon name="id-card-sharp"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="qr-user" *ngIf="viaje == 'Si tiene' && usuario.tipo_user != 'Conductor' ">
+        <ion-tab-button tab="qr-user" *ngIf="viaje == 'Si tiene' && usuario.tipo_user != 'Conductor' || usuario.tipo_user == 'Administrador' ">
           <ion-icon name="add-circle-outline"></ion-icon>
         </ion-tab-button>
         <ion-tab-button tab="perfil">
           <ion-icon name="person-circle-sharp"></ion-icon>
         </ion-tab-button>
-      <ion-tab-button tab="form-viajes" *ngIf="usuario.tipo_user == 'Conductor' ">
+      <ion-tab-button tab="form-viajes" *ngIf="usuario.tipo_user == 'Conductor' || usuario.tipo_user == 'Administrador' ">
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-tab-button>
     </ion-tab-bar>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { ViajeService } from 'src/app/services/viaje.service';
 
 @Component({
   selector: 'app-qr-user',
@@ -7,14 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QRUserPage implements OnInit {
 
-  constructor() { }
+  constructor(private usuarioService: UsuarioService, private viajeService: ViajeService ) { }
 
   usuario: any;
+  viaje: any;
 
-
-
-  ngOnInit() {
+  async ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+    
+    this.viaje = await this.viajeService.buscarViajeP(this.usuario.rut)
   }
 
 }

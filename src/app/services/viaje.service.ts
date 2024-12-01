@@ -26,12 +26,12 @@ export class ViajeService {
     let viaje1 = {
       id: '1',
       conductor: 'Juanito Alimaña',
-      asientos: '4',
-      precio: '2000',
+      asientos_disp: 4,
+      precio: 2000,
       destino: 'jose covarrubias',
       latit: '-33.61955417047049 ',
       longit: '-70.56958938663026',
-      metros_distancia: '3200',
+      metros_distancia: 3200,
       minutos: '10',
       estado: 'pendiente',
       pasajeros: [],
@@ -64,6 +64,8 @@ export class ViajeService {
       console.log(p);
       if(p.rut == rut){
         console.log("se enconto al pasajero: ", p.rut);
+        console.log("pertenece a la id: ", viaje);
+        
         return await "Si tiene"; 
       }
     }
@@ -104,8 +106,15 @@ export class ViajeService {
     if(indice==-1){
       return false;
     }
-    if(viajes[indice].pasajeros.find((pasajero: any) => pasajero.rut == pasajero.rut)){
-      return false;
+    const pasajeros = viajes[indice].pasajeros;
+    for(let p of pasajeros){
+      console.log(p);
+      if(p.rut == pasajero){
+        console.log("se enconto al pasajero: ", p.rut);
+        console.log("pertenece a la id: ", viajes[indice]);
+        
+        return false; 
+      }
     }
     viajes[indice].pasajeros.push(pasajero);
     viajes[indice].asientos_disp = viajes[indice].asientos_disp - 1;

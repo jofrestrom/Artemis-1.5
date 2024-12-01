@@ -28,6 +28,7 @@ export class FormViajesPage implements OnInit {
     longit: new FormControl( [Validators.required]),
     metros_distancia: new FormControl( [Validators.required]),
     minutos: new FormControl(),
+    hora_salida: new FormControl(),
     estado: new FormControl('pendiente'),
     pasajeros: new FormControl([])
   });
@@ -42,6 +43,7 @@ export class FormViajesPage implements OnInit {
   direccion: string = "";
   distancia_metros: number = 0;
   tiempo_segundos: number = 0;
+  hora: any;
   
   
   constructor( private ViajeServices: ViajeService,  private usuarioService: UsuarioService) { }
@@ -50,6 +52,7 @@ export class FormViajesPage implements OnInit {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
     this.initMap();
   }
+
   initMap(){
     try {
       //ACA CARGAMOS E INICIALIZAMOS EL MAPA:
@@ -92,16 +95,27 @@ export class FormViajesPage implements OnInit {
       console.log(error)
     }
   }
-
+  capturarHora(hora: any) {
+    const horaLocal = new Date(hora).toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    console.log('Hora local:', horaLocal);
+  }
+  
+  
   async crear(){
 
     const nombreCondu = this.usuario.nombre + ' ' + this.usuario.apellido
     this.viaje.controls.conductor.setValue(nombreCondu);
     
-    if(await this.ViajeServices.CrearViaje(this.viaje.value)){
-      console.log(this.viaje.value);
-      alert("creado con exito")
-    }
+    
+    
+
+    //if(await this.ViajeServices.CrearViaje(this.viaje.value)){
+    //  console.log(this.viaje.value);
+    //  alert("creado con exito")
+    //}
   }
 
 

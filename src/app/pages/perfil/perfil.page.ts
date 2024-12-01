@@ -82,7 +82,6 @@ export class PerfilPage implements OnInit {
 
   async presentAlertClose(user: string) {
     const alert = await this.alertController.create({
-      header: '¿Porque te vas?',
       message: `¿Estás seguro de que te quieres ir??`,
       buttons: [
         {

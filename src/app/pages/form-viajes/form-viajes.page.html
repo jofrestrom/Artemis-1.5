@@ -26,13 +26,20 @@
             <ion-label position="floating">VALOR</ion-label>
             <ion-input formControlName="precio" type="number"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-datetime locale="es-ES">
-              <span slot="time-label">HORA DE SALIDA</span>
-            </ion-datetime>
-          </ion-item>
-  
+          <br>
+          
           <ion-button expand="full" (click)="crear()">CREAR VIAJE</ion-button>
+          <ion-item>
+            <ion-datetime
+              locale="es-ES"
+              presentation="time"
+              #horaSalida
+            ></ion-datetime>
+          </ion-item>
+          <ion-button (click)="capturarHora(horaSalida.value)">
+            Capturar Hora
+          </ion-button>
+          
         </form>
       </ion-card-content>
     </ion-grid>

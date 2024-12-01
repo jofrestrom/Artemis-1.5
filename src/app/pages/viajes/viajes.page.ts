@@ -12,9 +12,12 @@ export class ViajesPage implements OnInit {
   constructor(private viajeService: ViajeService, private UsuarioService: UsuarioService) { }
 
   viajes: any;
-
+  usuario: any;
+  viaje: any;
   async ngOnInit() {
     this.ObtenerViajes();
+    this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+    this.viaje = await this.viajeService.buscarViajeP(this.usuario.rut)
   }
   
   async ObtenerViajes(){

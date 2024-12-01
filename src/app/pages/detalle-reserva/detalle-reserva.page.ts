@@ -68,8 +68,7 @@ export class DetalleReservaPage implements OnInit {
     if(await this.viajeService.actualizar_viaje(this.id, pasajero)){
       alert("Viaje tomado con éxito!");
       console.log(pasajero.rut);
-      
-      this.navController.navigateRoot("/home");
+      this.navController.navigateRoot("/home/qr-user");
     }else{
       alert("ERROR! ya eres pasajero!");
     }
