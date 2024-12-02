@@ -8,7 +8,8 @@ import { ViajeService } from 'src/app/services/viaje.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
+  
+  mostrar = false; // Estado inicial  
   constructor( private viajeSer: ViajeService,private navController: NavController) {}
 
   async ngOnInit(){
