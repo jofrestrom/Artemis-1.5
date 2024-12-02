@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Storage } from '@ionic/storage-angular';
 import { stringify } from 'uuid';
+import { FireViajesServiceService } from './fire-viajes-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViajeService {
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private viajeSer: FireViajesServiceService) {
 
     this.init();
   }
@@ -36,7 +37,7 @@ export class ViajeService {
       estado: 'pendiente',
       pasajeros: [],
       };
-    this.CrearViaje(viaje1);
+    this.viajeSer.CrearViaje(viaje1);
   }
   public async CrearViaje(viaje: any): Promise<boolean>{
     let Viajes: any[] = await this.storage.get("Viajes") || [];
@@ -47,11 +48,12 @@ export class ViajeService {
     
 
     Viajes.push(viaje);
-    await this.storage.set("Viajes", Viajes)
+    await this.viajeSer.CrearViaje(viaje)
     return true
   }
 
   async buscarViajeP(rut: string){
+    //const viajes: any[] = await this.storage.get("Viajes") || [];
     const viajes: any[] = await this.storage.get("Viajes") || [];
     
     const viaje = viajes.find(v=> v.id);
@@ -89,14 +91,15 @@ export class ViajeService {
     
   }
 
-  public async getViajes(): Promise<any []>{
-    return await this.storage.get("Viajes");
+  public async getViajes(){
+    let viajes = this.viajeSer.getViajes();
+    return viajes;
   }
 
   public async getviaje(id :string):Promise <any>{
-    let viajes: any[] = await this.storage.get("Viajes") || [];
+    let viajes = this.viajeSer.getviaje(id);
     console.log("viaje a tomar: ", viajes);
-    return viajes.find(v => v.id == id)
+    return viajes
 
   }
 
@@ -118,7 +121,8 @@ export class ViajeService {
     }
     viajes[indice].pasajeros.push(pasajero);
     viajes[indice].asientos_disp = viajes[indice].asientos_disp - 1;
-    await this.storage.set("Viajes",viajes);
+    //await this.storage.set("Viajes",viajes);
+    await this.viajeSer.UpdateViaje(viajes);
     return true;
   }
 

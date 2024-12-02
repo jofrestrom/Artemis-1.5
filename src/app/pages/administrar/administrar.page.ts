@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FireServiceService } from 'src/app/services/fire-service.service';
@@ -14,12 +14,12 @@ export class AdministrarPage implements OnInit {
 
   constructor(private usuarioService: UsuarioService,private router: Router, 
     private alertController: AlertController, private Firebase: FireServiceService) { 
-      
+      this.Usuario.get("rut")?.setValidators([Validators.required,Validators.pattern("[0-9]{7,8}-[0-9kK]{1}"),this.validarRut()]);
     }
    
 
   async ngOnInit() {
-    this.Firebase.getUsuarios();
+    this.cargarUsuarios()
     //this.Usuarios = await this.usuarioService.getUsuarios();
   }
 
@@ -39,11 +39,13 @@ export class AdministrarPage implements OnInit {
     patente: new FormControl(),
     canti_acientos: new FormControl()
   })
-  Usuarios: any[] = [];
+  Usuarios: any;
+  botonModificar: boolean = true;
 
   
-  buscar(usuario: any) {
-    this.Usuario.patchValue(usuario);
+  async buscar(usuario: any){
+    this.Usuario.setValue(usuario);
+    this.botonModificar = false;
   }
 
   async eliminar(rut: string) {
@@ -51,6 +53,48 @@ export class AdministrarPage implements OnInit {
     this.Firebase.getUsuarios();
     
   }
+  
+  validarRut():ValidatorFn{
+    return () => {
+      const rut = this.Usuario.controls.rut.value;
+      const dv_validar = rut?.replace("-","").split("").splice(-1).reverse()[0];
+      let rut_limpio = [];
+      if(rut?.length==10){
+        rut_limpio = rut?.replace("-","").split("").splice(0,8).reverse();
+      }else{
+        rut_limpio = rut?.replace("-","").split("").splice(0,7).reverse() || [];
+      }
+      let factor = 2;
+      let total = 0;
+      for(let num of rut_limpio){
+        total = total + ((+num)*factor);
+        factor = factor + 1;
+        if(factor==8){
+          factor = 2;
+        }
+      }
+      var dv = (11-(total%11)).toString();
+      if(+dv>=10){
+        dv = "k";
+      }
+      if(dv_validar!=dv.toString()) return {isValid: false};
+      return null;
+    };
+  }
+  validarEdad18(fecha_nacimiento: string){
+    var edad = 0;
+    if(fecha_nacimiento){
+      const fecha_date = new Date(fecha_nacimiento);
+      const timeDiff = Math.abs(Date.now() - fecha_date.getTime());
+      edad = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+    }
+    if(edad>=18){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   async registrar() {
     
@@ -65,7 +109,7 @@ export class AdministrarPage implements OnInit {
     }else if ( await this.Firebase.CrearUsuario(this.Usuario.value)){
       await this.presentAlert('Perfecto', 'Registrado correctamente');
       this.Usuario.reset();
-      await this.Firebase.getUsuarios();
+      this.Firebase.getUsuarios();
       this.router.navigate(['/home']);  
     } else {
       await this.presentAlert('Error', 'El usuario no se pudo registrar');
@@ -80,5 +124,17 @@ export class AdministrarPage implements OnInit {
     });
     await alert.present();
   }
-
+  cargarUsuarios(){
+    this.Firebase.getUsuarios().subscribe(data=>{
+      this.Usuarios = data;
+    });
+  }
+  async modificar(){
+    this.Firebase.UpdateUsuario(this.Usuario.value).then(()=>{
+      alert("USUARIO MODIFICADO!");
+      this.Usuario.reset();
+    }).catch(error=>{
+      console.log("ERROR: " + error);
+    });
+  }
 }

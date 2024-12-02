@@ -52,8 +52,8 @@
                 </ion-item>
               </ion-radio-group>
               <ion-button (click)="registrar()" >REGISTRAR</ion-button>
-              <ion-button >MODIFICAR</ion-button>
-              <ion-button>LIMPIAR</ion-button>
+              <ion-button (click)="modificar">MODIFICAR</ion-button>
+              <ion-button type="reset">LIMPIAR</ion-button>
             </form>
           </ion-card-content>
         </ion-card>
@@ -65,7 +65,7 @@
             <ion-list>
               <ion-item-sliding *ngFor="let usuario of Usuarios">
                 <ion-item>
-                  Rut: {{ usuario.rut }} | Nombre: {{ usuario.nombre }} {{usuario.apellido }} | Auto: {{ usuario.veiculo }}
+                  Rut: {{ usuario.rut }} | Nombre: {{ usuario.nombre | titlecase}} {{usuario.apellido | titlecase}} | Auto: {{ usuario.veiculo }}
                 </ion-item>
                 <ion-item-options>
                   <ion-item-option (click)="buscar(usuario)">

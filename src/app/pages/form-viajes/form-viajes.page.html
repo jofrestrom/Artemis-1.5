@@ -1,41 +1,44 @@
-
 <ion-content>
   <ion-grid id="global">
-  <ion-card>
-    <ion-card-content>
-      
-      <div id="map_html" style="height: 300px;"></div>
-
-    </ion-card-content>
-  </ion-card>
-  <ion-card >
-    <ion-grid>
+    <ion-card>
       <ion-card-content>
-        <form [formGroup]="viaje">
-          <ion-item>
-            <ion-label position="floating">DESTINO</ion-label>
-            <ion-input formControlName="destino" type="text"></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">CANTIDAD DE ASIENTOS</ion-label>
-            <ion-input formControlName="asientos" type="number"></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">VALOR</ion-label>
-            <ion-input formControlName="precio" type="number"></ion-input>
-          </ion-item>
-          <br>
-          <ion-item>
-            <ion-datetime locale="es-ES" presentation="time" formControlname="hora_salida" ></ion-datetime>
-          </ion-item>
-  
-          <ion-button expand="full" (click)="crear()">CREAR VIAJE</ion-button>
-        </form>
+        <div id="map_html" style="height: 300px;"></div>
       </ion-card-content>
-    </ion-grid>
-  </ion-card>
-</ion-grid>
+    </ion-card>
+    <ion-card>
+      <ion-grid>
+        <ion-card-content>
+          <form [formGroup]="viaje">
+            <ion-item>
+              <ion-label position="floating">DESTINO</ion-label>
+              <ion-input formControlName="destino" type="text"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="floating">CANTIDAD DE ASIENTOS</ion-label>
+              <ion-input formControlName="asientos" type="number"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="floating">VALOR</ion-label>
+              <ion-input formControlName="precio" type="number"></ion-input>
+            </ion-item>
+            
+            <br>
+            <!--
+            <ion-item>
+              <ion-label position="floating">HORA DE SALIDA</ion-label>
+              <ion-datetime
+                locale="es-ES"
+                presentation="time"
+                formControlName="hora_salida"
+              ></ion-datetime>
+            </ion-item>
+          -->
+            <ion-button expand="full" (click)="crear()">CREAR VIAJE</ion-button>
+          </form>
+        </ion-card-content>
+      </ion-grid>
+    </ion-card>
+  </ion-grid>
 </ion-content>
-ñ
