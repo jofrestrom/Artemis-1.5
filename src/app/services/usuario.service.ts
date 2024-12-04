@@ -123,7 +123,7 @@ export class UsuarioService {
     return true;    
   }
 
-  public async inicio(correo: string, contrasena: string): Promise<any>{
+  public async inicio(correo: any, contrasena: any): Promise<any>{
     this.Firebase.getUsuarios().subscribe(data => {
       this.user = data
     })
@@ -138,7 +138,13 @@ export class UsuarioService {
 
   }
   public async EliminarUsuario(rut: string): Promise<boolean>{
-    let usuarios: any[] = await this.storage.get("Usuarios") || [];
+    this.Firebase.getUsuarios().subscribe(data => {
+      this.user = data
+    })
+
+    let usuarios = this.user;
+    
+    console.log(this.user);
     let indice = usuarios.findIndex(elemento => elemento.rut === rut);
     if (indice === -1) {
       return false;

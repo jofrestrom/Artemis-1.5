@@ -54,6 +54,7 @@ export class ViajeService {
 
   async buscarViajeP(rut: string){
     //const viajes: any[] = await this.storage.get("Viajes") || [];
+    
     const viajes: any[] = await this.storage.get("Viajes") || [];
     
     const viaje = viajes.find(v=> v.id);
@@ -86,13 +87,11 @@ export class ViajeService {
       alert("viaje tomado con exito")
       viaje.pasajeros.push(rut)
     }
-
     return false;
-    
   }
 
   public async getViajes(){
-    let viajes = this.viajeSer.getViajes();
+    let viajes = await this.viajeSer.getViajes();
     return viajes;
   }
 

@@ -41,7 +41,6 @@ export class AdministrarPage implements OnInit {
   })
   Usuarios: any;
   botonModificar: boolean = true;
-
   
   async buscar(usuario: any){
     this.Usuario.setValue(usuario);

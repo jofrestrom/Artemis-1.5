@@ -13,15 +13,18 @@ export class ViajesPage implements OnInit {
 
   viajes: any;
   usuario: any;
-  viaje: any;
+  viaje: any[] = [];
   async ngOnInit() {
     this.ObtenerViajes();
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-    this.viaje = await this.viajeService.buscarViajeP(this.usuario.rut)
   }
   
   async ObtenerViajes(){
-    this.viajes = await this.viajeService.getViajes()
+    this.viajes = (await this.viajeService.getViajes()).subscribe(data => {
+      this.viaje = data
+    })
+    console.log("viajes: ", this.viaje);
+    
   }
 
 
