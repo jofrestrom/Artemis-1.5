@@ -3,6 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ViajeService } from 'src/app/services/viaje.service';
+import { getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { FireServiceService } from 'src/app/services/fire-service.service';
+import { AlertController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -10,28 +14,60 @@ import { ViajeService } from 'src/app/services/viaje.service';
   styleUrls: ['./inicio-sesion.page.scss'],
 })
 export class InicioSesionPage implements OnInit {
-  persona = new FormGroup({    
-      correo: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
-  })
-
-  constructor(private router: Router, private usuarioService: UsuarioService, private viajeSer: ViajeService) {
+  
+  constructor(private router: Router, private usuarioService: UsuarioService, private userFire: FireServiceService,
+    private alertController: AlertController, 
+    private fireAuth: AngularFireAuth 
+  ) {
     
   }
-
+  
+  
   ngOnInit() {
   }
-
+  
+  correo: string = '';
+  password: string = '';
+  
   async login(){
+    
+    const auth = getAuth();
 
-    const correo = this.persona.value.correo
-    const password = this.persona.value.password
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      this.correo,
+      this.password
+    );
 
-    if(await this.usuarioService.inicio(correo, password)){
-      this.router.navigate(['/home']);
-    }else{
-      alert("CORREO O CONTRASEÑA INCORRECTO")
-    }
+    // Usuario autenticado
+    const user = userCredential.user;
+    const uid = user.uid;
+    console.log('Usuario autenticado con UID:', uid);
+
+    const userData = await this.userFire.getUsuarioUid(uid);
+
+    console.log(userData);
+    
+    if (userData) {
+      if(await this.usuarioService.inicio(this.correo, this.password)){
+        await this.mostrarAlerta(
+          'Inicio de sesión exitoso',
+          'welcome to Artemis'
+        );
+        this.router.navigate(['/home']);
+      }else{
+        alert("CORREO O CONTRASEÑA INCORRECTO")
+
+      }
+      }
+  }
+  async mostrarAlerta(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['Aceptar'],
+    });
+    await alert.present();
   }
 
 }

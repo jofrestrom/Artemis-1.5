@@ -37,6 +37,7 @@ export class ViajeService {
       estado: 'pendiente',
       pasajeros: [],
       };
+
     this.viajeSer.CrearViaje(viaje1);
   }
   public async CrearViaje(viaje: any): Promise<boolean>{
@@ -54,20 +55,25 @@ export class ViajeService {
 
   async buscarViajeP(rut: string){
     //const viajes: any[] = await this.storage.get("Viajes") || [];
-    
+
+    let viajesT: any[] = [];    
     const viajes: any[] = await this.storage.get("Viajes") || [];
+
+    this.viajeSer.getViajes().subscribe(data => {
+      viajesT = data
+    })
     
-    const viaje = viajes.find(v=> v.id);
-    console.log("viaje encontrado", viaje);
-    if(rut == viaje.pasajeros.rut ){
+    const viajep = viajesT.find(v=> v.id);
+    console.log("viaje encontrado", viajep);
+    if(rut == viajep.pasajeros.rut ){
       console.log("hola");
     }
-    const pasajeros = viaje.pasajeros;
+    const pasajeros = viajep.pasajeros;
     for(let p of pasajeros){
       console.log(p);
       if(p.rut == rut){
         console.log("se enconto al pasajero: ", p.rut);
-        console.log("pertenece a la id: ", viaje);
+        console.log("pertenece a la id: ", viajep.id);
         
         return await "Si tiene"; 
       }

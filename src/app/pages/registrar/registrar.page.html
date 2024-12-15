@@ -25,7 +25,8 @@
         <br>
         <ion-input formControlName="password" type="password" label="CONTRASEÑA" labelPlacement="floating"></ion-input>
         <br>
-        <ion-input formControlName="confi_password" type="password" label="CONFIRMAR CONTRASEÑA" labelPlacement="floating"></ion-input>
+        <ion-input formControlName="confi_password" type="password" label="CONFIRMAR CONTRASEÑA" labelPlacement="floating" 
+        [class.invalid]="persona.get('contrasena_confirmar')?.value !== persona.get('contrasena')?.value"></ion-input>
         <br>
         <ion-select label="GENERO" formControlName="genero">
           <ion-select-option value="Masculino">Masculino</ion-select-option>

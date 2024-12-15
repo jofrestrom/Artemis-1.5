@@ -86,9 +86,9 @@ export class UsuarioService {
     }
 
     await this.Firebase.CrearUsuario(admin);
-    await this.Firebase.CrearUsuario(Alumno);
-    await this.Firebase.CrearUsuario(profesor);
-    await this.Firebase.CrearUsuario(conductor);
+    await this.crearUsuario(Alumno);
+    await this.crearUsuario(profesor);
+    await this.crearUsuario(conductor);
   }
 
   usuarios:any[] = [];
@@ -116,7 +116,7 @@ export class UsuarioService {
       usuario.tipo_user = "Conductor"
     }
 
-    console.log(JSON.stringify(usuario));
+    //console.log(JSON.stringify(usuario));
     usuarios.push(usuario);
     this.Firebase.CrearUsuario(usuario);
     //await this.storage.set("Usuarios", usuarios);

@@ -3,15 +3,13 @@
   <ion-card>
       <ion-card-title>Login</ion-card-title>
       <ion-card-content>
-        <form [formGroup] = "persona" (ngSubmit)="login()">
           
           <br>
-          <ion-input formControlName="correo" type="text" label="Correo" labelPlacement="floating"></ion-input>
+          <ion-input [(ngModel)]="correo" type="text" label="Correo" labelPlacement="floating"  placeholder="ejemplo@duocuc.cl"></ion-input>
           <br>
-          <ion-input formControlName="password" type="password" label="Contraseña" labelPlacement="floating"></ion-input>
+          <ion-input [(ngModel)]="password" type="password" label="Contraseña" labelPlacement="floating"></ion-input>
           <br>
           <ion-button (click)="login()">Ingresar</ion-button>
-        </form>
       </ion-card-content>
       <p>no tienes cuenta? <a routerLink="/registrar">Registrate</a></p>
       <p>se te olvido la contraseña? <a routerLink="/recuperar">Recuperate</a></p>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -35,8 +35,8 @@ export class RegistrarPage implements OnInit {
   persona = new FormGroup ({
     nombre: new FormControl('', [Validators.maxLength(10), Validators.minLength(4),Validators.required]),
     apellido: new FormControl('', [Validators.maxLength(10), Validators.minLength(4),Validators.required]),
-    rut: new FormControl('', [Validators.maxLength(10), Validators.minLength(9),Validators.required]),
-    correo: new FormControl('',[Validators.minLength(4),Validators.required, Validators.pattern("[a-zA-Z0-9.]+(@duocuc.cl) || [a-zA-Z0-9.]+(@profesor.duocuc.cl)")]),
+    rut: new FormControl('', [Validators.maxLength(10), Validators.minLength(9),Validators.required, this.validarRut()]),
+    correo: new FormControl('',[Validators.minLength(4),Validators.required, Validators.pattern("[a-zA-Z0-9.]+(@duocuc.cl) || [a-zA-Z0-9.]+(@profesor.duoc.cl)")]),
     fecha: new FormControl('', Validators.required),
     password: new FormControl('',[Validators.maxLength(10), Validators.minLength(4)]),
     confi_password: new FormControl('',[Validators.maxLength(10), Validators.minLength(4)]),
@@ -45,7 +45,7 @@ export class RegistrarPage implements OnInit {
     veiculo: new FormControl('',[Validators.required]),
     marca: new FormControl(),
     modelo: new FormControl(),
-    patente: new FormControl(),
+    patente: new FormControl(''),
     canti_acientos: new FormControl(),
   })
 
@@ -65,40 +65,36 @@ export class RegistrarPage implements OnInit {
     };
   }
   
-  validarRut():ValidatorFn{
-    return () => {
-      const rut = this.persona.controls.rut.value;
-      const dv_validar = rut?.replace("-","").split("").splice(-1).reverse()[0];
+  validarRut(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const rut = control.value;
+      if (!rut) return { isValid: false };
+      const dv_validar = rut?.replace("-", "").split("").splice(-1).reverse()[0];
       let rut_limpio = [];
-      if(rut?.length==10){
-        rut_limpio = rut?.replace("-","").split("").splice(0,8).reverse();
-      }else{
-        rut_limpio = rut?.replace("-","").split("").splice(0,7).reverse() || [];
+      if (rut?.length == 10) {
+        rut_limpio = rut?.replace("-", "").split("").splice(0, 8).reverse();
+      } else {
+        rut_limpio = rut?.replace("-", "").split("").splice(0, 7).reverse() || [];
       }
       let factor = 2;
       let total = 0;
-      for(let num of rut_limpio){
-        total = total + ((+num)*factor);
+      for (let num of rut_limpio) {
+        total = total + +num * factor;
         factor = factor + 1;
-        if(factor==8){
+        if (factor == 8) {
           factor = 2;
         }
       }
-      var dv = (11-(total%11)).toString();
-      if(+dv>=10){
+      let dv = (11 - (total % 11)).toString();
+      if (+dv >= 10) {
         dv = "k";
       }
-      if(dv_validar!=dv.toString()) return {isValid: false};
+      if (dv_validar != dv.toString()) return { isValid: false };
       return null;
     };
   }
 
   async registrar() {
-    
-
-    
-
-
 
     if(this.persona.controls.password.value != this.persona.controls.confi_password.value){
       await this.presentAlert('Problema', 'las contraseñas no coinsiden');
@@ -129,6 +125,13 @@ export class RegistrarPage implements OnInit {
       this.animarIcono = false;
       this.enviado = true;
     }, 2000);
+  }
+  validarPatenteChilena() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const patentePattern = /^[A-Z]{2}[0-9]{4}$|^[A-Z]{4}[0-9]{2}$/;
+      const esValida = patentePattern.test(control.value?.toUpperCase());
+      return esValida ? null : { patenteInvalida: true };
+    };
   }
 
 }
