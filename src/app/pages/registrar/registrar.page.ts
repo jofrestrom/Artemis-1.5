@@ -45,7 +45,7 @@ export class RegistrarPage implements OnInit {
     veiculo: new FormControl('',[Validators.required]),
     marca: new FormControl(),
     modelo: new FormControl(),
-    patente: new FormControl(''),
+    patente: new FormControl('',[this.validarPatenteChilena()]),
     canti_acientos: new FormControl(),
   })
 
@@ -95,7 +95,6 @@ export class RegistrarPage implements OnInit {
   }
 
   async registrar() {
-    
 
     if(this.persona.controls.password.value != this.persona.controls.confi_password.value){
       await this.presentAlert('Problema', 'las contraseñas no coinsiden');

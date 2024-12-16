@@ -53,31 +53,28 @@ export class ViajeService {
     return true
   }
 
-  async validarViajeP(rut: string){
-    //const viajes: any[] = await this.storage.get("Viajes") || [];
-
-    let viajesT: any[] = [];    
-    const viajes: any[] = await this.storage.get("Viajes") || [];
-
+  async validarViajeP(rut: string):Promise<void>{
+    let viajesT: any[] = [];
     this.viajeSer.getViajes().subscribe(data => {
       viajesT = data
       console.log(viajesT);
-    })
-    
-    const viajep = viajesT.find(v=> v.id);
-    console.log("viaje encontrado", viajep);
-    const pasajeros = viajep.pasajeros;
-    for(let p of pasajeros){
-      console.log(p);
-      if(p.rut == rut){
-        console.log("se enconto al pasajero: ", p.rut);
-        console.log("pertenece a la id: ", viajep.id);
-        
-        return await "Si tiene"; 
+      const viajep = viajesT.find(v=> v.id);
+      console.log("viaje encontrado", viajep);
+      if( viajep.pasajeros){
+        const pasajeros = viajep.pasajeros;
+        for(let p of pasajeros){
+          console.log(p);
+          if(p.rut == rut){
+            console.log("se enconto al pasajero: ", p.rut);
+            console.log("pertenece a la id: ", viajep.id);
+            return "Si tiene"; 
+          }
+        }
+        return "tiene";
+      } else {
+        return "No";
       }
-    }
-
-    return await "No tiene";
+    })
   }
   
 

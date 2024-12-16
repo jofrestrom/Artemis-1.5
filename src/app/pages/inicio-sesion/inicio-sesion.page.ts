@@ -50,10 +50,6 @@ export class InicioSesionPage implements OnInit {
       return
     }
     
-
-    // Usuario autenticado
-    
-    //if (userData) {
       if(await this.usuarioService.inicio(this.correo, this.password)){
         await this.mostrarAlerta(
           'Inicio de sesión exitoso',
@@ -64,7 +60,6 @@ export class InicioSesionPage implements OnInit {
         alert("CORREO O CONTRASEÑA INCORRECTO")
 
       }
-    //}
   }
   async mostrarAlerta(header: string, message: string) {
     const alert = await this.alertController.create({

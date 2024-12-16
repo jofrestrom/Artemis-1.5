@@ -100,11 +100,16 @@ export class UsuarioService {
 
   public async crearUsuario(usuario:any): Promise<boolean>{
     
-    let usuarios: any[] = await this.storage.get("Usuarios") || [];
-    
-    if(usuarios.find(user => user.rut === usuario.rut) != undefined){
+    let usuarios: any[] = [];
+
+    this.Firebase.getUsuarios().subscribe(data => {
+      usuarios = data
+    })
+
+    if(await usuarios.find(user => user.rut === usuario.rut) != undefined){
       return false; 
     }
+
     if (!this.ProfeCorreo.test(usuario.correo) && !this.AlumnoCorreo.test(usuario.correo)){
       return false; 
     } 

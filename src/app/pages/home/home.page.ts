@@ -12,19 +12,22 @@ export class HomePage {
   mostrar = false; // Estado inicial  
   constructor( private viajeSer: ViajeService,private navController: NavController) {}
 
-  async ngOnInit(){
-    this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-    this.viaje = await this.viajeSer.validarViajeP(this.usuario.rut)
-    console.log("viaje " ,JSON.stringify(this.viaje));
-    //this.viajeid = this.viajeSer.buscarids();  
-  }
-
   usuario: any;
   usuarioRut: string;
   viaje: any;
+  async ngOnInit() {
+    this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+    this.viajeSer.validarViajeP(this.usuario.rut).then((viaje) => {
+      this.viaje = viaje;
+      console.log("viaje ", this.viaje);
+    });
+  }
   
   home(){
     this.navController.navigateRoot('/home');
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 
 }
