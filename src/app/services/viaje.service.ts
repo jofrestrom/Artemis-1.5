@@ -53,7 +53,7 @@ export class ViajeService {
     return true
   }
 
-  async buscarViajeP(rut: string){
+  async validarViajeP(rut: string){
     //const viajes: any[] = await this.storage.get("Viajes") || [];
 
     let viajesT: any[] = [];    
@@ -61,13 +61,11 @@ export class ViajeService {
 
     this.viajeSer.getViajes().subscribe(data => {
       viajesT = data
+      console.log(viajesT);
     })
     
     const viajep = viajesT.find(v=> v.id);
     console.log("viaje encontrado", viajep);
-    if(rut == viajep.pasajeros.rut ){
-      console.log("hola");
-    }
     const pasajeros = viajep.pasajeros;
     for(let p of pasajeros){
       console.log(p);
@@ -79,7 +77,7 @@ export class ViajeService {
       }
     }
 
-    return await "No tiene"; // Si no se encuentra, devolver null
+    return await "No tiene";
   }
   
 

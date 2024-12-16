@@ -22,7 +22,7 @@ export class FireServiceService{
     if(!usuario.correo.includes("[a-zA-Z0-9.]+(@duocuc.cl) || [a-zA-Z0-9.]+(@profesor.duoc.cl)")){
       return false
     }
-    
+
     const authuser = await this.fireAuth.createUserWithEmailAndPassword(usuario.correo,usuario.password);
     const idUser = authuser.user?.uid
     await docRef.set({ ...usuario,idUser});
@@ -35,12 +35,20 @@ export class FireServiceService{
     return this.fireStore.collection('Usuarios').doc(rut).valueChanges();
   }
 
+  getRut(correo: string){
+    const userRut = this.fireStore.collection
+  }
+
   getUsuarioUid(uid: string): Promise<any>{
-    return this.fireStore.collection('usuarios', ref => ref.where('uid', '==', uid)).get().toPromise().then(snapshot => {
-      if (snapshot && !snapshot.empty){
-        return snapshot.docs[0].data();
+
+    return this.fireStore.collection('Usuarios', ref => ref.where('uid', '==', uid)).get().toPromise().then(snapshot => {
+      console.log("hola3");
+      if (snapshot && snapshot.empty){
+        console.log("hola1");
+        return snapshot.docs[0];
+      }else{
+        return null;
       }
-      return null;
     }).catch((error) => {
       console.error("Error al obtener usuario:", error);
       return null;

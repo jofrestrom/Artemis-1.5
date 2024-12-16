@@ -31,24 +31,29 @@ export class InicioSesionPage implements OnInit {
   
   async login(){
     
-    const auth = getAuth();
+    
+    if(this.correo == '' || this.password == ''){
+      console.log("correo",this.correo);
+      console.log("pasword|", this.password);
+      await this.mostrarAlerta(
+        'porfavor volver a intentar',
+        'debe ingresar algun dato solicitado'
+      );
+      return
+    }
 
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      this.correo,
-      this.password
-    );
+    if(this.correo.includes("[a-zA-Z0-9.]+(@duocuc.cl) || [a-zA-Z0-9.]+(@profesor.duoc.cl)")){
+      await this.mostrarAlerta(
+        'porfavor volver a intentar',
+        'datos mal ingresador'
+      );
+      return
+    }
+    
 
     // Usuario autenticado
-    const user = userCredential.user;
-    const uid = user.uid;
-    console.log('Usuario autenticado con UID:', uid);
-
-    const userData = await this.userFire.getUsuarioUid(uid);
-
-    console.log(userData);
     
-    if (userData) {
+    //if (userData) {
       if(await this.usuarioService.inicio(this.correo, this.password)){
         await this.mostrarAlerta(
           'Inicio de sesión exitoso',
@@ -59,7 +64,7 @@ export class InicioSesionPage implements OnInit {
         alert("CORREO O CONTRASEÑA INCORRECTO")
 
       }
-      }
+    //}
   }
   async mostrarAlerta(header: string, message: string) {
     const alert = await this.alertController.create({

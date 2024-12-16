@@ -14,7 +14,7 @@ export class HomePage {
 
   async ngOnInit(){
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-    this.viaje = await this.viajeSer.buscarViajeP(this.usuario.rut)
+    this.viaje = await this.viajeSer.validarViajeP(this.usuario.rut)
     console.log("viaje " ,JSON.stringify(this.viaje));
     //this.viajeid = this.viajeSer.buscarids();  
   }

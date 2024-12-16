@@ -23,13 +23,7 @@ export class RecuperarPage implements OnInit {
   }
 
   async enviar(correo: string){
-    if(await this.usuarioService.recuperar(this.correo)){
-      this.firebase.recuperarContrasena(correo)
-      await this.presentAlert("exlente", 'revisar bandeja de entrada para el correo: ' + this.correo)
-      this.router.navigate(['/inicio-sesion'])
-    }else{
-      await this.presentAlert("ERROR", 'No se encontro el correo ingresado')
-    }
+    this.firebase.recuperarContrasena(correo)
   }
 
   async presentAlert(header: string, message: string) {

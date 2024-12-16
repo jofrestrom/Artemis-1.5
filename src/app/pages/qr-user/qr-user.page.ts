@@ -17,7 +17,7 @@ export class QRUserPage implements OnInit {
   async ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
     
-    this.viaje = await this.viajeService.buscarViajeP(this.usuario.rut)
+    this.viaje = await this.viajeService.validarViajeP(this.usuario.rut)
   }
 
 }

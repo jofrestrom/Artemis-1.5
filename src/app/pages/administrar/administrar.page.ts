@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { FireServiceService } from 'src/app/services/fire-service.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -13,7 +13,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class AdministrarPage implements OnInit {
 
   constructor(private usuarioService: UsuarioService,private router: Router, 
-    private alertController: AlertController, private Firebase: FireServiceService) { 
+    private alertController: AlertController, private Firebase: FireServiceService, private navController: NavController) { 
       this.Usuario.get("rut")?.setValidators([Validators.required,Validators.pattern("[0-9]{7,8}-[0-9kK]{1}"),this.validarRut()]);
     }
    
@@ -28,9 +28,7 @@ export class AdministrarPage implements OnInit {
     apellido: new FormControl('', [Validators.maxLength(10), Validators.minLength(4),Validators.required]),
     rut: new FormControl('', [Validators.maxLength(10), Validators.minLength(9),Validators.required]),
     correo: new FormControl('',[Validators.minLength(4),Validators.required, Validators.pattern("[a-zA-Z0-9.]+(@duocuc.cl) || [a-zA-Z0-9.]+(@profesor.duocuc.cl)")]),
-    fecha_naci: new FormControl('', Validators.required),
-    password: new FormControl('',[Validators.maxLength(10), Validators.minLength(4)]),
-    confi_password: new FormControl('',[Validators.maxLength(10), Validators.minLength(4)]),
+    fecha: new FormControl('', Validators.required),
     genero: new FormControl(Validators.required),
     tipo_user: new FormControl('Alumno'),
     veiculo: new FormControl('',[Validators.required]),
@@ -38,6 +36,7 @@ export class AdministrarPage implements OnInit {
     modelo: new FormControl(),
     patente: new FormControl(),
     canti_acientos: new FormControl()
+    
   })
   Usuarios: any;
   botonModificar: boolean = true;
@@ -48,9 +47,7 @@ export class AdministrarPage implements OnInit {
   }
 
   async eliminar(rut: string) {
-    this.Firebase.DeleteUsuario(rut)
-    this.Firebase.getUsuarios();
-    
+    this.presentAlertDelete(rut)
   }
   
   validarRut():ValidatorFn{
@@ -97,15 +94,7 @@ export class AdministrarPage implements OnInit {
 
   async registrar() {
     
-    if(this.Usuario.controls.password.value != this.Usuario.controls.confi_password.value){
-      alert("las contraseñas no coinciden")
-      return;
-    }
-    
-    
-    if(this.Usuario.controls.password.value != this.Usuario.controls.confi_password.value){
-      await this.presentAlert('Problema', 'las contraseñas no coinsiden');
-    }else if ( await this.Firebase.CrearUsuario(this.Usuario.value)){
+    if ( await this.Firebase.CrearUsuario(this.Usuario.value)){
       await this.presentAlert('Perfecto', 'Registrado correctamente');
       this.Usuario.reset();
       this.Firebase.getUsuarios();
@@ -134,6 +123,26 @@ export class AdministrarPage implements OnInit {
       this.Usuario.reset();
     }).catch(error=>{
       console.log("ERROR: " + error);
+    });
+  }
+  async presentAlertDelete(user: string) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar Usuario',
+      message: `¿Estás seguro de que deseas eliminar a ${this.Usuarios.nombre}?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.Firebase.DeleteUsuario(user)
+            this.Firebase.getUsuarios();           // Actualiza la lista de usuarios
+            this.navController.navigateRoot('/home');
+          },
+        },
+      ],
     });
   }
 }

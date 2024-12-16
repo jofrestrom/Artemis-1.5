@@ -30,9 +30,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/form-perfil-user/form-perfil-user.module').then( m => m.FormPerfilUserPageModule)
   },
   {
-    path: 'qr-compartir',
-    loadChildren: () => import('./pages/qr-compartir/qr-compartir.module').then( m => m.QRCompartirPageModule)
-  },{
     path: 'home/viajes/detalle-reserva/:id',
     loadChildren: () => import('./pages/detalle-reserva/detalle-reserva.module').then( m => m.DetalleReservaPageModule)
   },

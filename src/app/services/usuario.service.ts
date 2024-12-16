@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 
 import { Storage } from '@ionic/storage-angular';
 import { FireServiceService } from './fire-service.service';
+import { getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -123,7 +124,29 @@ export class UsuarioService {
     return true;    
   }
 
-  public async inicio(correo: any, contrasena: any): Promise<any>{
+  public async inicio(correo: string, contrasena: string): Promise<any>{
+    
+    const auth = getAuth();
+    
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      correo,
+      contrasena
+    );
+    
+    const user = userCredential.user;
+    
+    
+    const uid = user.uid;
+    console.log('Usuario autenticado con UID:', uid);
+
+    const userData = await this.Firebase.getUsuarioUid(uid);
+  
+    if(userData){
+      console.log("hola");
+      
+    }
+
     this.Firebase.getUsuarios().subscribe(data => {
       this.user = data
     })
