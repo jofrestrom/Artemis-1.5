@@ -15,8 +15,14 @@ export class HomePage {
   usuario: any;
   usuarioRut: string;
   viaje: any;
+  viajes: any;
   async ngOnInit() {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+
+    this.viajes = await this.viajeSer.validarViajeP(this.usuario.rut)
+    console.log("viaje 2", this.viajes);
+    
+
     this.viajeSer.validarViajeP(this.usuario.rut).then((viaje) => {
       this.viaje = viaje;
       console.log("viaje ", this.viaje);

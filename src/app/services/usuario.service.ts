@@ -163,8 +163,8 @@ export class UsuarioService {
     }
     return false;
 
-
   }
+  
   public async EliminarUsuario(rut: string): Promise<boolean>{
     this.Firebase.getUsuarios().subscribe(data => {
       this.user = data

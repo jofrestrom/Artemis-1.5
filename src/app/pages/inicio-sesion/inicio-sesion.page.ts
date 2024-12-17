@@ -68,6 +68,10 @@ export class InicioSesionPage implements OnInit {
       buttons: ['Aceptar'],
     });
     await alert.present();
+  }  
+  
+  refreshPage() {
+    window.location.reload();
   }
 
 }
